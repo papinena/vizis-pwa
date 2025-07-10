@@ -9,7 +9,8 @@
 }
 
 @theme {
-	--font-body: "Open Sans", "sans-serif"
+	--font-body: "Open Sans", "sans-serif";
+	--font-title: "Open Sans", "sans-serif"
 }
 
 html,

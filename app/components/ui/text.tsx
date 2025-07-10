@@ -3,6 +3,8 @@ import { cn } from "~/lib/utils";
 const variants = {
   body: "font-body",
   default: "font-body",
+  title: "font-title text-2xl font-semibold",
+  subtitle: "font-title text-xl font-semibold",
 };
 
 export function Text({

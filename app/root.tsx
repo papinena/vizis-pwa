@@ -9,6 +9,10 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import useWindowSize from "./hooks/useWindowsSize";
+import { MOBILE_BREAKPOINT } from "./utils/constants";
+import { Text } from "./components/ui/text";
+import { Box } from "./components/ui/box";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +46,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { width } = useWindowSize();
+
+  if (width > MOBILE_BREAKPOINT) {
+    return <Text>Works better in mobile screens</Text>;
+  }
+
+  return (
+    <Box className="bg-gray-200 flex-1 min-w-dvw min-h-dvh">
+      <Outlet />
+    </Box>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
