@@ -9,28 +9,24 @@ function getWindowDimensions() {
 }
 
 export default function useWindowSize() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  // Initialize state with a default value that doesn't rely on `window`.
+  // This makes the hook SSR-safe.
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   useEffect(() => {
-    // Ensure window is defined (for server-side rendering or environments without a window)
-    if (typeof window === "undefined") {
-      return;
-    }
-
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
 
     window.addEventListener("resize", handleResize);
-    // Call handleResize once initially to set the correct dimensions
-    // if the component mounts after the initial state is set
+    // Call handler right away so state gets updated with initial window size
     handleResize();
 
-    // Cleanup: Remove the event listener when the component unmounts
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
+  }, []);
 
   return windowDimensions;
 }

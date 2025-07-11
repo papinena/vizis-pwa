@@ -52,11 +52,7 @@ export default function App() {
     return <Text>Works better in mobile screens</Text>;
   }
 
-  return (
-    <Box className="bg-gray-200 flex-1 min-w-dvw min-h-dvh">
-      <Outlet />
-    </Box>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
