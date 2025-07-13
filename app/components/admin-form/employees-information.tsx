@@ -9,7 +9,10 @@ import { useFormContext } from "react-hook-form";
 import type { EmployeesInformationFormData } from "interfaces/basic-information-admin-register-form";
 
 export function EmployeesInformation() {
-  const { register } = useFormContext<EmployeesInformationFormData>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<EmployeesInformationFormData>();
 
   return (
     <SectionContainer>
@@ -21,16 +24,40 @@ export function EmployeesInformation() {
       </Box>
       <Box className="w-full flex flex-wrap gap-2">
         <Item>
-          <InputWithLabel label="Nome" {...register("employeeName1")} />
-          <EmailInput label="Email" {...register("employeeEmail1")} />
+          <InputWithLabel
+            label="Nome"
+            {...register("employeeName1")}
+            error={errors.employeeName1?.message}
+          />
+          <EmailInput
+            label="Email"
+            {...register("employeeEmail1")}
+            error={errors.employeeEmail1?.message}
+          />
         </Item>
         <Item>
-          <InputWithLabel label="Nome" {...register("employeeName2")} />
-          <EmailInput label="Email" {...register("employeeEmail2")} />
+          <InputWithLabel
+            label="Nome"
+            {...register("employeeName2")}
+            error={errors.employeeName2?.message}
+          />
+          <EmailInput
+            label="Email"
+            {...register("employeeEmail2")}
+            error={errors.employeeEmail2?.message}
+          />
         </Item>
         <Item>
-          <InputWithLabel label="Nome" {...register("employeeName3")} />
-          <EmailInput label="Email" {...register("employeeEmail3")} />
+          <InputWithLabel
+            label="Nome"
+            {...register("employeeName3")}
+            error={errors.employeeName3?.message}
+          />
+          <EmailInput
+            label="Email"
+            {...register("employeeEmail3")}
+            error={errors.employeeEmail3?.message}
+          />
         </Item>
       </Box>
     </SectionContainer>

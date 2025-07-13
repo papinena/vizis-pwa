@@ -11,37 +11,10 @@ import { BasicInformation } from "~/components/admin-form/basic-information";
 import { CondominiumInformation } from "~/components/admin-form/condominium-information";
 import { EmployeesInformation } from "~/components/admin-form/employees-information";
 import { Textarea } from "~/components/text-area";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const Schema = z
-  .object({
-    adminName: z.string().min(4, "Mínimo de 4 caracteres"),
-    adminLastName: z.string().min(4, "Mínimo de 4 caracteres"),
-    telephone: z
-      .string({ error: "Obrigatório" })
-      .min(9, { error: "Mínimo de 9 dígitos" }),
-    position: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
-    isResident: z.boolean({ error: "Obrigatório" }),
-    blockAndApartment: z.string(),
-    email: z.email({ error: "Email inválido" }),
-    confirmEmail: z.email({ error: "Email inválido" }),
-    password: z.string().min(4, { error: "Mínimo de 4 caracteres" }),
-    confirmPassword: z.string().min(4, { error: "Mínimo de 4 caracteres" }),
-    condominiumUsefulInformation: z.string(),
-  })
-  .refine((schema) => schema.password === schema.confirmPassword, {
-    message: "As senhas devem ser iguais",
-    path: ["confirmPassword"],
-  })
-  .refine((schema) => schema.confirmEmail === schema.email, {
-    message: "O email deve ser igual",
-    path: ["confirmEmail"],
-  });
-
-export function UserParser(data: unknown) {
-  return Schema.safeParse(data);
-}
+import { CreateAdminSchema } from "~/parsers/create-admin";
+import { Camera } from "lucide-react";
+import { Image } from "~/components/ui/image";
 
 export default function AdminForm() {
   const methods = useForm({
@@ -56,9 +29,23 @@ export default function AdminForm() {
       confirmEmail: "",
       password: "",
       confirmPassword: "",
+      administer: "",
+      contact: "",
+      administerAddress: "",
+      administerTelephone: "",
+      administerEmail: "",
+      observations: "",
+      porteiroChefe: "",
+      portariaTelephone: "",
       condominiumUsefulInformation: "",
+      employeeName1: "",
+      employeeEmail1: "",
+      employeeName2: "",
+      employeeEmail2: "",
+      employeeName3: "",
+      employeeEmail3: "",
     },
-    resolver: zodResolver(Schema),
+    resolver: zodResolver(CreateAdminSchema),
   });
 
   const onSave = (data: any) => {
@@ -72,8 +59,11 @@ export default function AdminForm() {
           <Box className="flex-col gap-5 mx-auto">
             <Box className="flex-col">
               <Text variant="title">Cadastro</Text>
-              <Box className="gap-12">
-                <Box className="w-20 h-20 bg-gray-400" />
+              <Box className="gap-12 m-auto">
+                <Box className="flex-1 flex-col h-32 justify-center items-center w-32 m-auto rounded-2xl bg-gray-400">
+                  <Image className="h-16 ml-3 w-16" src="/image 27.svg" />
+                  <Text>+ foto</Text>
+                </Box>
                 <Box className="flex-col gap-3">
                   <NameInput
                     label="Nome"
