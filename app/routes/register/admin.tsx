@@ -1,5 +1,5 @@
+import { Link } from "react-router";
 import { Box } from "~/components/ui/box";
-import { Button } from "~/components/ui/button";
 import { Image } from "~/components/ui/image";
 import { Text } from "~/components/ui/text";
 
@@ -16,23 +16,30 @@ export default function AdminIndex() {
         </Box>
         <Box className="p-5 flex-col gap-5 flex rounded-2xl -mt-16 flex-1 z-1 bg-white h-full w-full">
           <Text className="text-green-primary">
-            Olá, Administração do Condomínio XXX, sejam bem-vindos(as) ao Vizis!
+            Olá, <strong>Administração do Condomínio XXX</strong>, sejam
+            bem-vindos(as) ao Vizis!
           </Text>
           <Text className="font-bold">
             O Vizis tem uma área exclusiva para você e seu time!
           </Text>
           <Text>
-            Nela você pode fazer{" "}
-            <Text className="text-green-primary">
+            Nela você pode fazer
+            <strong className="text-green-primary  mx-1">
               a gestão dos moradores, compartilhar informações
-            </Text>{" "}
-            relevantes sobre o condomínio,{" "}
-            <Text className="text-green-primary">divulgar benfeitorias</Text>{" "}
-            realizadas e se{" "}
-            <Text className="text-green-primary">aproximar dos moradores</Text>.
+            </strong>
+            relevantes sobre o condomínio,
+            <strong className="text-green-primary mx-1">
+              divulgar benfeitorias
+            </strong>
+            realizadas e se aproximar dos moradores.
           </Text>
           <Text> Aproveite!</Text>
-          <Button>Cadastre-se já!</Button>
+          <Link
+            className="bg-green-primary rounded-sm flex p-2 mx-5 justify-center"
+            to={"./form"}
+          >
+            <Text className="font-normal text-white">Cadastre-se já!</Text>
+          </Link>
         </Box>
       </Box>
     </Box>
