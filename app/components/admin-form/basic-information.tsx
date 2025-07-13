@@ -35,7 +35,7 @@ export function BasicInformation() {
         </Item>
         <Item>
           <Box className="flex-1 flex-col gap-2">
-            <Text>É morador?*</Text>
+            <Label>É morador?*</Label>
             <Controller
               name="isResident"
               control={control}

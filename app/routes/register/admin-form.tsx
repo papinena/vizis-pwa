@@ -11,10 +11,12 @@ import { BasicInformation } from "~/components/admin-form/basic-information";
 import { CondominiumInformation } from "~/components/admin-form/condominium-information";
 import { EmployeesInformation } from "~/components/admin-form/employees-information";
 import { Textarea } from "~/components/text-area";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateAdminSchema } from "~/parsers/create-admin";
-import { Camera } from "lucide-react";
 import { Image } from "~/components/ui/image";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
 
 export default function AdminForm() {
   const methods = useForm({
@@ -23,7 +25,7 @@ export default function AdminForm() {
       adminLastName: "",
       telephone: "",
       position: "",
-      isResident: false,
+      isResident: undefined,
       blockAndApartment: "",
       email: "",
       confirmEmail: "",
@@ -44,9 +46,23 @@ export default function AdminForm() {
       employeeEmail2: "",
       employeeName3: "",
       employeeEmail3: "",
+      photo: undefined,
     },
     resolver: zodResolver(CreateAdminSchema),
   });
+
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const onSave = (data: any) => {
     console.log("Form submitted:", data);
@@ -61,8 +77,32 @@ export default function AdminForm() {
               <Text variant="title">Cadastro</Text>
               <Box className="gap-12 m-auto">
                 <Box className="flex-1 flex-col h-32 justify-center items-center w-32 m-auto rounded-2xl bg-gray-400">
-                  <Image className="h-16 ml-3 w-16" src="/image 27.svg" />
-                  <Text>+ foto</Text>
+                  <Label
+                    htmlFor="photo-upload-input"
+                    className="cursor-pointer w-full h-full flex flex-col justify-center items-center"
+                  >
+                    {preview ? (
+                      <Image
+                        src={preview}
+                        alt="Preview"
+                        className="h-32 w-32 rounded-2xl object-cover"
+                      />
+                    ) : (
+                      <>
+                        <Image className="h-16 ml-3 w-16" src="/image 27.svg" />
+                        <Text>+ foto</Text>
+                      </>
+                    )}
+                  </Label>
+                  <Input
+                    id="photo-upload-input"
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    {...methods.register("photo", {
+                      onChange: handleFileChange,
+                    })}
+                  />
                 </Box>
                 <Box className="flex-col gap-3">
                   <NameInput

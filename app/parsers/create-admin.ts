@@ -18,7 +18,7 @@ export const CreateAdminSchema = z
     contact: z.string(),
     administerAddress: z.string(),
     administerTelephone: z.string(),
-    administerEmail: z.email("Email inválido"),
+    administerEmail: z.email("Email inválido").optional().or(z.literal("")),
     observations: z.string(),
     porteiroChefe: z.string(),
     portariaTelephone: z.string(),
@@ -29,6 +29,18 @@ export const CreateAdminSchema = z
     employeeName3: z.string().optional(),
     employeeEmail3: z.email("Email inválido").optional().or(z.literal("")),
     condominiumUsefulInformation: z.string(),
+    photo: z
+      .any()
+      .optional()
+      .refine(
+        (files) => !files || files.length === 0 || files[0].size <= 5000000,
+        "Max 5MB"
+      )
+      .refine(
+        (files) =>
+          !files || files.length === 0 || files[0].type.startsWith("image/"),
+        "Apenas imagens"
+      ),
   })
   .refine((schema) => schema.password === schema.confirmPassword, {
     message: "As senhas devem ser iguais",
