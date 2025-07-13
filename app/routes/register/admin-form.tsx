@@ -90,6 +90,12 @@ function SectionContainer({ children }: { children: ReactNode }) {
   return <Box className="flex-col gap-3">{children}</Box>;
 }
 
+function Textarea() {
+  return (
+    <textarea className="appearance-none resize-none w-full rounded-lg flex-1 border border-gray-400" />
+  );
+}
+
 function BasicInformation() {
   return (
     <SectionContainer>
@@ -157,8 +163,8 @@ function CondominiumInformation() {
           <TelephoneInput />
           <EmailInput />
         </Item>
-        <Item>
-          <textarea />
+        <Item className="w-full">
+          <Textarea />
         </Item>
         <Item>
           <InputWithLabel label="Porteiro Chefe" />
@@ -233,7 +239,9 @@ export default function AdminForm() {
             <SectionTitle>
               Inclua informações úteis para o condomínio
             </SectionTitle>
-            <textarea />
+            <Item className="w-full">
+              <Textarea />
+            </Item>
           </SectionContainer>
           <Button className="mx-20" size={"lg"}>
             Enviar
