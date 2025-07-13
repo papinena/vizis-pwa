@@ -2,7 +2,7 @@ import { InputWithLabel } from "../input-with-label";
 import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { Text } from "../ui/text";
@@ -10,42 +10,12 @@ import { EmailInput } from "./email-input";
 import { Item } from "./item";
 import { PasswordInput } from "./password-input";
 import { TelephoneInput } from "./telephone-input";
-import { Button } from "../ui/button";
-
-// Form data type
-type BasicInformationFormData = {
-  telephone: string;
-  position: string;
-  isResident: boolean;
-  blockAndApartment: string;
-  email: string;
-  confirmEmail: string;
-  password: string;
-  confirmPassword: string;
-};
+import type { BasicInformationFormData } from "interfaces/basic-information-admin-register-form";
 
 export function BasicInformation() {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<BasicInformationFormData>({
-    defaultValues: {
-      telephone: "",
-      position: "",
-      isResident: false,
-      blockAndApartment: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const onSubmit = (data: BasicInformationFormData) => {
-    console.log("Form submitted:", data);
-  };
+  const { register, control, formState } =
+    useFormContext<BasicInformationFormData>();
+  const errors = formState.errors;
 
   return (
     <SectionContainer>
@@ -137,9 +107,6 @@ export function BasicInformation() {
           </Box>
         </Item>
       </Box>
-      <Button onClick={handleSubmit(onSubmit)} className="mx-20" size={"lg"}>
-        Enviar
-      </Button>
     </SectionContainer>
   );
 }
