@@ -1,5 +1,17 @@
-export function Textarea() {
+import type { TextareaHTMLAttributes } from "react";
+import { cn } from "~/lib/utils";
+
+export function Textarea({
+  className,
+  ...props
+}: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
-    <textarea className="appearance-none resize-none w-full rounded-lg flex-1 border border-gray-400" />
+    <textarea
+      {...props}
+      className={cn(
+        "appearance-none resize-none w-full rounded-lg flex-1 border border-gray-200",
+        className
+      )}
+    />
   );
 }

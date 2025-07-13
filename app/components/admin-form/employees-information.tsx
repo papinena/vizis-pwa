@@ -5,9 +5,12 @@ import { Box } from "../ui/box";
 import { Text } from "../ui/text";
 import { EmailInput } from "./email-input";
 import { Item } from "./item";
-import { TelephoneInput } from "./telephone-input";
+import { useFormContext } from "react-hook-form";
+import type { EmployeesInformationFormData } from "interfaces/basic-information-admin-register-form";
 
 export function EmployeesInformation() {
+  const { register } = useFormContext<EmployeesInformationFormData>();
+
   return (
     <SectionContainer>
       <Box className="flex flex-row items-center w-full">
@@ -18,19 +21,16 @@ export function EmployeesInformation() {
       </Box>
       <Box className="w-full flex flex-wrap gap-2">
         <Item>
-          <InputWithLabel label="Administradora" />
-          <InputWithLabel label="Contato" />
-        </Item>
-        <Item className="w-full">
-          <InputWithLabel label="Endereço da Administradora" />
+          <InputWithLabel label="Nome" {...register("employeeName1")} />
+          <EmailInput label="Email" {...register("employeeEmail1")} />
         </Item>
         <Item>
-          <TelephoneInput label="Telefone" />
-          <EmailInput />
+          <InputWithLabel label="Nome" {...register("employeeName2")} />
+          <EmailInput label="Email" {...register("employeeEmail2")} />
         </Item>
         <Item>
-          <InputWithLabel label="Porteiro Chefe" />
-          <TelephoneInput label="Telefone Portaria" />
+          <InputWithLabel label="Nome" {...register("employeeName3")} />
+          <EmailInput label="Email" {...register("employeeEmail3")} />
         </Item>
       </Box>
     </SectionContainer>
