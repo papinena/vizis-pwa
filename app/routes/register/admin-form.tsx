@@ -1,149 +1,18 @@
 import { Text } from "~/components/ui/text";
 import { Box } from "~/components/ui/box";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
-import type { InputHTMLAttributes, ReactNode } from "react";
 import { Button } from "~/components/ui/button";
-import { Checkbox } from "~/components/ui/checkbox";
-import { cn } from "~/lib/utils";
-
-function InputWithLabel({ label }: { label: string }) {
-  return (
-    <Box className="flex-col gap-1.5 flex-1">
-      <Label className="flex-1">{label}</Label>
-      <Input />
-    </Box>
-  );
-}
-
-function PasswordInput({
-  inputProps,
-  label,
-}: {
-  label?: string;
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
-}) {
-  return (
-    <Box className="flex-col gap-1.5 flex-1">
-      <Label>{label ?? "Senha"}</Label>
-      <Input type="password" {...inputProps} />
-    </Box>
-  );
-}
-
-function NameInput({
-  inputProps,
-  label,
-}: {
-  label?: string;
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
-}) {
-  return (
-    <Box className="flex-col gap-1.5 flex-1">
-      <Label className="flex-1">{label ?? "Nome"}</Label>
-      <Input {...inputProps} />
-    </Box>
-  );
-}
-
-function TelephoneInput({
-  inputProps,
-  label,
-}: {
-  label?: string;
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
-}) {
-  return (
-    <Box className="flex-col gap-1.5 flex-1">
-      <Label className="flex-1">{label ?? "Telefone"}</Label>
-      <Input {...inputProps} />
-    </Box>
-  );
-}
-
-function EmailInput({
-  label,
-  inputProps,
-}: {
-  label?: string;
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
-}) {
-  return (
-    <Box className="flex-col gap-1.5 flex-1">
-      <Label className="flex-1">{label ?? "Email"}</Label>
-      <Input type="email" {...inputProps} />
-    </Box>
-  );
-}
-
-function Item({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return <Box className={cn("gap-9", className)}>{children}</Box>;
-}
-
-function SectionContainer({ children }: { children: ReactNode }) {
-  return <Box className="flex-col gap-3">{children}</Box>;
-}
+import { TelephoneInput } from "~/components/admin-form/telephone-input";
+import { InputWithLabel } from "~/components/input-with-label";
+import { EmailInput } from "~/components/admin-form/email-input";
+import { NameInput } from "~/components/admin-form/name-input";
+import { SectionTitle } from "~/components/section-title";
+import { Item } from "~/components/admin-form/item";
+import { SectionContainer } from "~/components/section-container";
+import { BasicInformation } from "~/components/admin-form/basic-information";
 
 function Textarea() {
   return (
     <textarea className="appearance-none resize-none w-full rounded-lg flex-1 border border-gray-400" />
-  );
-}
-
-function BasicInformation() {
-  return (
-    <SectionContainer>
-      <SectionTitle>Informações básicas</SectionTitle>
-      <Box className="flex-col gap-3">
-        <Item>
-          <TelephoneInput label="Telefone / Whatsapp*" />
-          <InputWithLabel label="Cargo no condomínio*" />
-        </Item>
-        <Item>
-          <Box className="flex-1 flex-col gap-2">
-            <Text>É morador?*</Text>
-            <Box className="w-full gap-3">
-              <Box className="gap-1.5 flex-1">
-                <Checkbox className="h-7 w-7" />
-                <Label>Sim</Label>
-              </Box>
-              <Box className="gap-1.5 flex-1">
-                <Checkbox className="h-7 w-7" />
-                <Label>Não</Label>
-              </Box>
-            </Box>
-          </Box>
-          <InputWithLabel label="Bloco e apartamento" />
-        </Item>
-        <Item>
-          <EmailInput />
-          <EmailInput label="Confirme seu email*" />
-        </Item>
-        <Item>
-          <Box className="flex-col w-full gap-3">
-            <Item>
-              <PasswordInput label="Crie uma senha*" />
-              <PasswordInput label="Confirme seu senha*" />
-            </Item>
-            <Box className="flex-col">
-              <Text className="text-sm text-gray-400">8 caracteres</Text>
-              <Text className="text-sm text-gray-400">
-                Pelo menos 1 caracter especial
-              </Text>
-              <Text className="text-sm text-gray-400">
-                Pelo menos 1 numeral
-              </Text>
-            </Box>
-          </Box>
-        </Item>
-      </Box>
-    </SectionContainer>
   );
 }
 
@@ -153,37 +22,28 @@ function CondominiumInformation() {
       <SectionTitle>Sobre o condomínio</SectionTitle>
       <Box className="w-full flex flex-wrap gap-2">
         <Item>
-          <InputWithLabel label="Administradora" />
-          <InputWithLabel label="Contato" />
+          <InputWithLabel name="administer" label="Administradora" />
+          <InputWithLabel name="contact" label="Contato" />
         </Item>
         <Item>
-          <InputWithLabel label="Endereço da Administradora" />
+          <InputWithLabel
+            name="administer-address"
+            label="Endereço da Administradora"
+          />
         </Item>
         <Item>
-          <TelephoneInput />
-          <EmailInput />
+          <TelephoneInput name="telephone" />
+          <EmailInput name="email" />
         </Item>
         <Item className="w-full">
           <Textarea />
         </Item>
         <Item>
-          <InputWithLabel label="Porteiro Chefe" />
+          <InputWithLabel name="porteiro-chefe" label="Porteiro Chefe" />
           <TelephoneInput label="Telefone Portaria" />
         </Item>
       </Box>
     </SectionContainer>
-  );
-}
-
-function SectionTitle({
-  children,
-  className,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <Text className={cn("text-[#4B4C4D] flex-1", className)}>{children}</Text>
   );
 }
 
