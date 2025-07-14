@@ -3,6 +3,7 @@ import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import type { InputHTMLAttributes } from "react";
 import { Text } from "../ui/text";
+import { cn } from "~/lib/utils";
 
 export function TelephoneInput({
   label,
@@ -12,9 +13,12 @@ export function TelephoneInput({
   label?: string;
   error?: string;
 }) {
+  const _label = `${label ?? "Telefone"}${error ? "*" : ""}`;
   return (
     <Box className="flex-col gap-1.5 flex-1">
-      <Label className="flex-1">{label ?? "Telefone"}</Label>
+      <Label className={cn("flex-1", error ? "text-red-400" : "")}>
+        {_label}
+      </Label>
       <Input {...props} />
       {error && <Text className="text-red-500 text-sm">{error}</Text>}
     </Box>

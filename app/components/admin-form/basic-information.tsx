@@ -3,14 +3,13 @@ import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
 import { Controller, useFormContext } from "react-hook-form";
-import { Checkbox } from "../ui/checkbox";
-import { Label } from "../ui/label";
 import { Text } from "../ui/text";
 import { EmailInput } from "./email-input";
 import { Item } from "./item";
 import { PasswordInput } from "./password-input";
 import { TelephoneInput } from "./telephone-input";
 import type { BasicInformationFormData } from "interfaces/basic-information-admin-register-form";
+import { IsResidentCheckbox } from "~/components/is-resident-checkbox";
 
 export function BasicInformation() {
   const { register, control, formState } =
@@ -23,48 +22,29 @@ export function BasicInformation() {
       <Box className="flex-col gap-3">
         <Item>
           <TelephoneInput
-            label="Telefone / Whatsapp*"
+            label="Telefone / Whatsapp"
             error={errors.telephone?.message}
             {...register("telephone")}
           />
           <InputWithLabel
-            label="Cargo no condomínio*"
+            label="Cargo no condomínio"
             {...register("position")}
             error={errors.position?.message}
           />
         </Item>
         <Item>
           <Box className="flex-1 flex-col gap-2">
-            <Label>É morador?*</Label>
             <Controller
               name="isResident"
               control={control}
               render={({ field }) => (
-                <Box className="w-full gap-3">
-                  <Box className="gap-1.5 flex-1">
-                    <Checkbox
-                      className="h-7 w-7"
-                      checked={field.value === true}
-                      onCheckedChange={() => field.onChange(true)}
-                    />
-                    <Label>Sim</Label>
-                  </Box>
-                  <Box className="gap-1.5 flex-1">
-                    <Checkbox
-                      className="h-7 w-7"
-                      checked={field.value === false}
-                      onCheckedChange={() => field.onChange(false)}
-                    />
-                    <Label>Não</Label>
-                  </Box>
-                </Box>
+                <IsResidentCheckbox
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.isResident?.message}
+                />
               )}
             />
-            {errors.isResident && (
-              <Text className="text-red-500 text-sm">
-                {errors.isResident.message}
-              </Text>
-            )}
           </Box>
           <InputWithLabel
             label="Bloco e apartamento"

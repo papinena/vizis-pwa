@@ -78,8 +78,8 @@ export default function AdminForm() {
       administerTelephone: "",
       administerEmail: "",
       observations: "",
-      porteiroChefe: "",
-      portariaTelephone: "",
+      doorKeeperChief: "",
+      receptionTelephone: "",
       condominiumUsefulInformation: "",
       employeeName1: "",
       employeeEmail1: "",
@@ -109,13 +109,16 @@ export default function AdminForm() {
     console.log("Form submitted:", data);
   };
 
+  const hasErrors = Object.keys(methods.formState.errors).length > 0;
+  console.log(hasErrors);
+
   return (
     <FormProvider {...methods}>
       <Box className="flex-1 flex-col w-full">
         <Box className="flex-col  px-2 pb-9 pt-1.5 flex-1 bg-white rounded-lg border-green-primary border-2">
           <Box className="flex-col gap-5 mx-auto">
             <Box className="flex-col">
-              <Text variant="title">Cadastro</Text>
+              <Text variant="title">Cadastro da Administração</Text>
               <Box className="gap-5">
                 <Box className="flex-col rounded-2xl">
                   <UploadPhotoInput
@@ -152,6 +155,13 @@ export default function AdminForm() {
                 />
               </Item>
             </SectionContainer>
+            {hasErrors && (
+              <Box className="border-red-400 text-center p-3 border rounded-lg">
+                <Text className="text-red-400">
+                  Os campos em vermelho são de preenchimento obrigatório.
+                </Text>
+              </Box>
+            )}
             <Button
               onClick={methods.handleSubmit(onSave)}
               className="mx-20 bg-green-primary hover:bg-green-primary/90"
