@@ -16,9 +16,9 @@ export function EmployeesInformation() {
 
   return (
     <SectionContainer>
-      <Box className="flex flex-row items-center w-full">
-        <SectionTitle className="flex-1">Funcionários</SectionTitle>
-        <Text className="text-[8px] flex-1 pt-2">
+      <Box className="flex flex-row items-start gap-1.5 justify-start w-full">
+        <SectionTitle className="flex-none">Funcionários</SectionTitle>
+        <Text className="text-[8px] pt-2">
           (autorizados a postar pelo condomínio)
         </Text>
       </Box>

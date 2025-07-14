@@ -14,9 +14,50 @@ import { Textarea } from "~/components/text-area";
 import { CreateAdminSchema } from "~/parsers/create-admin";
 import { Image } from "~/components/ui/image";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
+
+function UploadPhotoInput({
+  preview,
+  register,
+  handleFileChange,
+}: {
+  register: any;
+  preview: string | null;
+  handleFileChange(e: ChangeEvent<HTMLInputElement>): void;
+}) {
+  return (
+    <>
+      <Label
+        htmlFor="photo-upload-input"
+        className="h-32 w-32 bg-gray-400 rounded-2xl cursor-pointer  flex flex-col justify-center items-center"
+      >
+        {preview ? (
+          <Image
+            src={preview}
+            alt="Preview"
+            className="max-w-full w-full h-full flex-1 rounded-2xl object-cover"
+          />
+        ) : (
+          <Box className="flex-col p-3 items-center">
+            <Image className="h-full flex-1 ml-3 w-full" src="/image 27.svg" />
+            <Text>+ foto</Text>
+          </Box>
+        )}
+      </Label>
+      <Input
+        id="photo-upload-input"
+        type="file"
+        className="hidden"
+        accept="image/*"
+        {...register("photo", {
+          onChange: handleFileChange,
+        })}
+      />
+    </>
+  );
+}
 
 export default function AdminForm() {
   const methods = useForm({
@@ -75,36 +116,15 @@ export default function AdminForm() {
           <Box className="flex-col gap-5 mx-auto">
             <Box className="flex-col">
               <Text variant="title">Cadastro</Text>
-              <Box className="gap-12 m-auto">
-                <Box className="flex-1 flex-col h-32 justify-center items-center w-32 m-auto rounded-2xl bg-gray-400">
-                  <Label
-                    htmlFor="photo-upload-input"
-                    className="cursor-pointer w-full h-full flex flex-col justify-center items-center"
-                  >
-                    {preview ? (
-                      <Image
-                        src={preview}
-                        alt="Preview"
-                        className="h-32 w-32 rounded-2xl object-cover"
-                      />
-                    ) : (
-                      <>
-                        <Image className="h-16 ml-3 w-16" src="/image 27.svg" />
-                        <Text>+ foto</Text>
-                      </>
-                    )}
-                  </Label>
-                  <Input
-                    id="photo-upload-input"
-                    type="file"
-                    className="hidden"
-                    accept="image/*"
-                    {...methods.register("photo", {
-                      onChange: handleFileChange,
-                    })}
+              <Box className="gap-5">
+                <Box className="flex-col rounded-2xl">
+                  <UploadPhotoInput
+                    preview={preview}
+                    handleFileChange={handleFileChange}
+                    register={methods.register}
                   />
                 </Box>
-                <Box className="flex-col gap-3">
+                <Box className="flex-col max-w-64 flex-1 gap-3">
                   <NameInput
                     label="Nome"
                     {...methods.register("adminName", { required: true })}
