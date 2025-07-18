@@ -3,10 +3,10 @@ import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
 import { Text } from "../ui/text";
-import { EmailInput } from "./email-input";
-import { Item } from "./item";
 import { useFormContext } from "react-hook-form";
 import type { EmployeesInformationFormData } from "interfaces/basic-information-admin-register-form";
+import { Item } from "../register/item";
+import { EmailInput } from "../register/email-input";
 
 export function EmployeesInformation() {
   const {

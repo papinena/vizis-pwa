@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { Button } from "~/components/register/button";
 import { Box } from "~/components/ui/box";
 import { Image } from "~/components/ui/image";
 import { Text } from "~/components/ui/text";
@@ -14,7 +15,7 @@ export default function AdminIndex() {
             src="/Group 152.svg"
           />
         </Box>
-        <Box className="p-5 flex-col gap-5 flex rounded-2xl -mt-16 flex-1 z-1 bg-white h-full w-full">
+        <Box className="p-5 text-center flex-col gap-5 flex rounded-2xl -mt-16 flex-1 z-1 bg-white h-full w-full">
           <Text className="text-green-primary">
             Olá, <strong>Administração do Condomínio XXX</strong>, sejam
             bem-vindos(as) ao Vizis!
@@ -34,12 +35,7 @@ export default function AdminIndex() {
             realizadas e se aproximar dos moradores.
           </Text>
           <Text> Aproveite!</Text>
-          <Link
-            className="bg-green-primary rounded-sm flex p-2 mx-5 justify-center"
-            to={"./form"}
-          >
-            <Text className="font-normal text-white">Cadastre-se já!</Text>
-          </Link>
+          <Button className="bg-green-primary" />
         </Box>
       </Box>
     </Box>

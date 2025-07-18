@@ -11,7 +11,8 @@
 @theme {
 	--font-body: "Open Sans", "sans-serif";
 	--font-title: "Open Sans", "sans-serif";
-	--color-green-primary: #94C56F
+	--color-green-primary: #94C56F;
+	--color-blue-primary: #5A88C3
 }
 
 html,
@@ -22,6 +23,7 @@ body {
     color-scheme: dark;
   }
 }
+
 
 
 @theme inline {

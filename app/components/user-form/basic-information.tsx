@@ -2,18 +2,15 @@ import { InputWithLabel } from "../input-with-label";
 import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { Text } from "../ui/text";
 import { Item } from "../register/item";
 import { TelephoneInput } from "../register/telephone-input";
 import { EmailInput } from "../register/email-input";
 import { PasswordInput } from "../register/password-input";
-import type { BasicInformationFormData } from "interfaces/basic-information-admin-register-form";
-import { IsResidentCheckbox } from "~/components/is-resident-checkbox";
 
 export function BasicInformation() {
-  const { register, control, formState } =
-    useFormContext<BasicInformationFormData>();
+  const { register, formState } = useFormContext();
   const errors = formState.errors;
 
   return (
@@ -21,36 +18,27 @@ export function BasicInformation() {
       <SectionTitle>Informações básicas</SectionTitle>
       <Box className="flex-col gap-3">
         <Item>
-          <TelephoneInput
-            label="Telefone / Whatsapp"
+          <InputWithLabel
+            label="Apartamento (ex: 702)"
             error={errors.telephone?.message}
             {...register("telephone")}
           />
           <InputWithLabel
-            label="Cargo no condomínio"
+            label="Bloco (se houver)"
             {...register("position")}
             error={errors.position?.message}
           />
         </Item>
         <Item>
-          <Box className="flex-1 flex-col gap-2">
-            <Controller
-              name="isResident"
-              control={control}
-              render={({ field }) => (
-                <IsResidentCheckbox
-                  value={field.value}
-                  onChange={field.onChange}
-                  error={errors.isResident?.message}
-                />
-              )}
-            />
-          </Box>
           <InputWithLabel
-            label="Bloco e apartamento"
-            {...register("blockAndApartment")}
-            name="blockAndApartment"
-            error={errors.blockAndApartment?.message}
+            label="Data Nasc. (xx/xx/xxxx)"
+            error={errors.email?.message}
+            {...register("email")}
+          />
+          <TelephoneInput
+            label="Telefone / Whatsapp"
+            {...register("confirmEmail")}
+            error={errors.confirmEmail?.message}
           />
         </Item>
         <Item>

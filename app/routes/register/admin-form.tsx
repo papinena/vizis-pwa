@@ -3,61 +3,18 @@ import { Box } from "~/components/ui/box";
 import { Button } from "~/components/ui/button";
 import { useForm, FormProvider } from "react-hook-form";
 import { InputWithLabel } from "~/components/input-with-label";
-import { NameInput } from "~/components/admin-form/name-input";
 import { SectionTitle } from "~/components/section-title";
-import { Item } from "~/components/admin-form/item";
 import { SectionContainer } from "~/components/section-container";
 import { BasicInformation } from "~/components/admin-form/basic-information";
 import { CondominiumInformation } from "~/components/admin-form/condominium-information";
 import { EmployeesInformation } from "~/components/admin-form/employees-information";
 import { Textarea } from "~/components/text-area";
 import { CreateAdminSchema } from "~/parsers/create-admin";
-import { Image } from "~/components/ui/image";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, type ChangeEvent } from "react";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
-
-function UploadPhotoInput({
-  preview,
-  register,
-  handleFileChange,
-}: {
-  register: any;
-  preview: string | null;
-  handleFileChange(e: ChangeEvent<HTMLInputElement>): void;
-}) {
-  return (
-    <>
-      <Label
-        htmlFor="photo-upload-input"
-        className="h-32 w-32 bg-gray-400 rounded-2xl cursor-pointer  flex flex-col justify-center items-center"
-      >
-        {preview ? (
-          <Image
-            src={preview}
-            alt="Preview"
-            className="max-w-full w-full h-full flex-1 rounded-2xl object-cover"
-          />
-        ) : (
-          <Box className="flex-col p-3 items-center">
-            <Image className="h-full flex-1 ml-3 w-full" src="/image 27.svg" />
-            <Text>+ foto</Text>
-          </Box>
-        )}
-      </Label>
-      <Input
-        id="photo-upload-input"
-        type="file"
-        className="hidden"
-        accept="image/*"
-        {...register("photo", {
-          onChange: handleFileChange,
-        })}
-      />
-    </>
-  );
-}
+import { useState } from "react";
+import { NameInput } from "~/components/register/name-input";
+import { Item } from "~/components/register/item";
+import { UploadPhotoInput } from "~/components/register/upload-photo-input";
 
 export default function AdminForm() {
   const methods = useForm({
@@ -117,7 +74,7 @@ export default function AdminForm() {
       <Box className="flex-1 flex-col w-full">
         <Box className="flex-col  px-2 pb-9 pt-1.5 flex-1 bg-white rounded-lg border-green-primary border-2">
           <Box className="flex-col gap-5 mx-auto">
-            <Box className="flex-col">
+            <Box className="flex-col gap-5">
               <Text variant="title">Cadastro da Administração</Text>
               <Box className="gap-5">
                 <Box className="flex-col rounded-2xl">

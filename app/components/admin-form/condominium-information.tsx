@@ -3,12 +3,12 @@ import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Textarea } from "../text-area";
 import { Box } from "../ui/box";
-import { EmailInput } from "./email-input";
-import { Item } from "./item";
-import { TelephoneInput } from "./telephone-input";
 import { useFormContext } from "react-hook-form";
 import type { CondominiumInformationFormData } from "interfaces/basic-information-admin-register-form";
 import { Label } from "../ui/label";
+import { Item } from "../register/item";
+import { TelephoneInput } from "../register/telephone-input";
+import { EmailInput } from "../register/email-input";
 
 export function CondominiumInformation() {
   const {
