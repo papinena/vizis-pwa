@@ -20,6 +20,13 @@ export function CondominiumInformation() {
     <SectionContainer>
       <SectionTitle>Sobre o condomínio</SectionTitle>
       <Box className="w-full flex flex-wrap gap-2">
+        <Item className="flex-1">
+          <InputWithLabel
+            label="Nome do condomínio"
+            {...register("condominiumName")}
+            error={errors.condominiumName?.message}
+          />
+        </Item>
         <Item>
           <InputWithLabel
             label="Administradora"

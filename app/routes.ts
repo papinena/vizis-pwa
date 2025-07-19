@@ -7,6 +7,8 @@ export default [
       route("user/form", "./routes/register/user-form.tsx"),
       route("admin", "./routes/register/admin.tsx"),
       route("admin/form", "./routes/register/admin-form.tsx"),
+      route("submitted", "./routes/register/submitted.tsx"),
+      route("error", "./routes/register/error.tsx"),
     ]),
   ]),
 ] satisfies RouteConfig;

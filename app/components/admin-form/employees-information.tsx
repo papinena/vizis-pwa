@@ -3,62 +3,62 @@ import { SectionContainer } from "../section-container";
 import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
 import { Text } from "../ui/text";
-import { useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import type { EmployeesInformationFormData } from "interfaces/basic-information-admin-register-form";
 import { Item } from "../register/item";
 import { EmailInput } from "../register/email-input";
+import { Button } from "../ui/button";
+import { PlusIcon, XIcon } from "lucide-react";
 
 export function EmployeesInformation() {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<EmployeesInformationFormData>();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "employees",
+    rules: { minLength: 1 },
+  });
 
   return (
     <SectionContainer>
       <Box className="flex flex-row items-start gap-1.5 justify-start w-full">
         <SectionTitle className="flex-none">Funcionários</SectionTitle>
-        <Text className="text-[8px] pt-2">
-          (autorizados a postar pelo condomínio)
-        </Text>
       </Box>
-      <Box className="w-full flex flex-wrap gap-2">
-        <Item>
-          <InputWithLabel
-            label="Nome"
-            {...register("employeeName1")}
-            error={errors.employeeName1?.message}
-          />
-          <EmailInput
-            label="Email"
-            {...register("employeeEmail1")}
-            error={errors.employeeEmail1?.message}
-          />
-        </Item>
-        <Item>
-          <InputWithLabel
-            label="Nome"
-            {...register("employeeName2")}
-            error={errors.employeeName2?.message}
-          />
-          <EmailInput
-            label="Email"
-            {...register("employeeEmail2")}
-            error={errors.employeeEmail2?.message}
-          />
-        </Item>
-        <Item>
-          <InputWithLabel
-            label="Nome"
-            {...register("employeeName3")}
-            error={errors.employeeName3?.message}
-          />
-          <EmailInput
-            label="Email"
-            {...register("employeeEmail3")}
-            error={errors.employeeEmail3?.message}
-          />
-        </Item>
+      <Text className="text-[10px]">
+        (autorizados a postar pelo condomínio)
+      </Text>
+      <Box className="w-full flex flex-col gap-4">
+        {fields.map((field, index) => (
+          <Box key={field.id}>
+            <Item className="gap-2 items-end">
+              <InputWithLabel
+                label="Nome"
+                {...register(`employees.${index}.name`)}
+                error={errors.employees?.[index]?.name?.message}
+              />
+              <EmailInput
+                label="Email"
+                {...register(`employees.${index}.email`)}
+                error={errors.employees?.[index]?.email?.message}
+              />
+              <Button variant="destructive" onClick={() => remove(index)}>
+                <XIcon />
+              </Button>
+            </Item>
+          </Box>
+        ))}
+        {errors.employees?.root?.message && (
+          <Text className="text-red-500 text-sm">
+            {errors.employees?.root?.message}
+          </Text>
+        )}
+        <Button onClick={() => append({ name: "", email: "" })}>
+          <PlusIcon />
+        </Button>
       </Box>
     </SectionContainer>
   );

@@ -1,16 +1,14 @@
 import { Image } from "~/components/ui/image";
 import { type ChangeEvent } from "react";
 import { Label } from "~/components/ui/label";
-import { Box } from "lucide-react";
 import { Input } from "../ui/input";
 import { Text } from "../ui/text";
+import { Box } from "../ui/box";
 
 export function UploadPhotoInput({
   preview,
-  register,
   handleFileChange,
 }: {
-  register: any;
   preview: string | null;
   handleFileChange(e: ChangeEvent<HTMLInputElement>): void;
 }) {
@@ -38,9 +36,7 @@ export function UploadPhotoInput({
         type="file"
         className="hidden"
         accept="image/*"
-        {...register("photo", {
-          onChange: handleFileChange,
-        })}
+        onChange={handleFileChange}
       />
     </>
   );

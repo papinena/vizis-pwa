@@ -22,6 +22,7 @@ body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+  color: #4B4C4D;
 }
 
 

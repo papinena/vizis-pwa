@@ -12,9 +12,22 @@ export const CreateAdminSchema = z
     blockAndApartment: z.string(),
     email: z.email({ error: "Email inválido" }),
     confirmEmail: z.email({ error: "Email inválido" }),
-    password: z.string().min(4, { error: "Mínimo de 4 caracteres" }),
-    confirmPassword: z.string().min(4, { error: "Mínimo de 4 caracteres" }),
+    password: z
+      .string()
+      .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
+      .regex(/\d/, { error: "A senha deve conter ao menos um número" })
+      .regex(/[^a-zA-Z0-9]/, {
+        error: "A senha deve conter ao menos um caractere especial",
+      }),
+    confirmPassword: z
+      .string()
+      .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
+      .regex(/\d/, { error: "A senha deve conter ao menos um número" })
+      .regex(/[^a-zA-Z0-9]/, {
+        error: "A senha deve conter ao menos um caractere especial",
+      }),
     administer: z.string(),
+    condominiumName: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
     contact: z.string(),
     administerAddress: z.string(),
     administerTelephone: z.string(),
@@ -22,25 +35,15 @@ export const CreateAdminSchema = z
     observations: z.string(),
     doorKeeperChief: z.string(),
     receptionTelephone: z.string(),
-    employeeName1: z.string().optional(),
-    employeeEmail1: z.email("Email inválido").optional().or(z.literal("")),
-    employeeName2: z.string().optional(),
-    employeeEmail2: z.email("Email inválido").optional().or(z.literal("")),
-    employeeName3: z.string().optional(),
-    employeeEmail3: z.email("Email inválido").optional().or(z.literal("")),
-    condominiumUsefulInformation: z.string(),
-    photo: z
-      .any()
-      .optional()
-      .refine(
-        (files) => !files || files.length === 0 || files[0].size <= 5000000,
-        "Max 5MB"
+    employees: z
+      .array(
+        z.object({
+          name: z.string().min(2, { error: "Mínimo de 2 caracters" }),
+          email: z.email(),
+        })
       )
-      .refine(
-        (files) =>
-          !files || files.length === 0 || files[0].type.startsWith("image/"),
-        "Apenas imagens"
-      ),
+      .min(1, { error: "Mínimo de um funcionário" }),
+    condominiumUsefulInformation: z.string(),
   })
   .refine((schema) => schema.password === schema.confirmPassword, {
     message: "As senhas devem ser iguais",

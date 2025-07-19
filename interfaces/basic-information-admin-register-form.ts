@@ -11,6 +11,7 @@ export type BasicInformationFormData = {
 
 export type CondominiumInformationFormData = {
   administer: string;
+  condominiumName: string;
   contact: string;
   administerAddress: string;
   administerTelephone: string;
@@ -21,10 +22,8 @@ export type CondominiumInformationFormData = {
 };
 
 export type EmployeesInformationFormData = {
-  employeeName1: string;
-  employeeName2: string;
-  employeeName3: string;
-  employeeEmail1: string;
-  employeeEmail2: string;
-  employeeEmail3: string;
+  employees: {
+    name: string;
+    email: string;
+  }[];
 };

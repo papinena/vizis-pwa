@@ -15,36 +15,13 @@ import { useState } from "react";
 import { NameInput } from "~/components/register/name-input";
 import { Item } from "~/components/register/item";
 import { UploadPhotoInput } from "~/components/register/upload-photo-input";
+import { useAdminForm } from "~/hooks/useAdminForm";
 
 export default function AdminForm() {
+  const { fields, setFields } = useAdminForm();
   const methods = useForm({
     defaultValues: {
-      adminName: "",
-      adminLastName: "",
-      telephone: "",
-      position: "",
-      isResident: undefined,
-      blockAndApartment: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
-      confirmPassword: "",
-      administer: "",
-      contact: "",
-      administerAddress: "",
-      administerTelephone: "",
-      administerEmail: "",
-      observations: "",
-      doorKeeperChief: "",
-      receptionTelephone: "",
-      condominiumUsefulInformation: "",
-      employeeName1: "",
-      employeeEmail1: "",
-      employeeName2: "",
-      employeeEmail2: "",
-      employeeName3: "",
-      employeeEmail3: "",
-      photo: undefined,
+      ...fields,
     },
     resolver: zodResolver(CreateAdminSchema),
   });
@@ -62,12 +39,12 @@ export default function AdminForm() {
     }
   };
 
-  const onSave = (data: any) => {
+  const onSave = (data: typeof fields) => {
+    setFields(data);
     console.log("Form submitted:", data);
   };
 
   const hasErrors = Object.keys(methods.formState.errors).length > 0;
-  console.log(hasErrors);
 
   return (
     <FormProvider {...methods}>
@@ -81,7 +58,6 @@ export default function AdminForm() {
                   <UploadPhotoInput
                     preview={preview}
                     handleFileChange={handleFileChange}
-                    register={methods.register}
                   />
                 </Box>
                 <Box className="flex-col max-w-64 flex-1 gap-3">

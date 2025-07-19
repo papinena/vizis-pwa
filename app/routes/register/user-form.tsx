@@ -10,6 +10,7 @@ import { useState, type ReactNode } from "react";
 import { Input } from "~/components/ui/input";
 import { NameInput } from "~/components/register/name-input";
 import { UploadPhotoInput } from "~/components/register/upload-photo-input";
+import { cn } from "~/lib/utils";
 
 const themes = [
   "Alimento",
@@ -32,15 +33,30 @@ const themes = [
   "Transporte",
 ];
 
-function ThemeItem({ children }: { children: ReactNode }) {
+function ThemeItem({
+  children,
+  setSelectedTheme,
+  isSelected,
+}: {
+  isSelected: boolean;
+  setSelectedTheme(): void;
+  children: ReactNode;
+}) {
   return (
-    <Box className="border basis-[calc((100%-1rem)/3)] p-2 text-center border-gray-200 rounded-lg">
+    <Box
+      onClick={setSelectedTheme}
+      className={cn(
+        "border cursor-pointer justify-center basis-[calc((100%-1rem)/3)] p-2 text-center border-gray-200 rounded-lg",
+        isSelected ? "bg-gray-300" : ""
+      )}
+    >
       <Text>{children}</Text>
     </Box>
   );
 }
 
 export default function AdminForm() {
+  const [selectedTheme, setSelectedTheme] = useState([""]);
   const methods = useForm({
     defaultValues: {
       adminName: "",
@@ -91,11 +107,19 @@ export default function AdminForm() {
   };
 
   const hasErrors = Object.keys(methods.formState.errors).length > 0;
+  function handleSelectedTheme(t: string) {
+    setSelectedTheme((s) => {
+      const i = s.findIndex((v) => v === t);
+      console.log(i);
+      if (i > -1) return s.filter((v) => v !== t);
+      return s.concat([t]);
+    });
+  }
 
   return (
     <FormProvider {...methods}>
       <Box className="flex-1 flex-col w-full">
-        <Box className="flex-col  px-2 pb-9 pt-1.5 flex-1 bg-white rounded-lg border-green-primary border-2">
+        <Box className="flex-col  px-2 pb-9 pt-1.5 flex-1 bg-white rounded-lg border-blue-primary border-2">
           <Box className="flex-col gap-5 mx-auto">
             <Box className="flex-col gap-5">
               <Text variant="title">Seu cadastro</Text>
@@ -128,7 +152,13 @@ export default function AdminForm() {
               </Text>
               <Box className="w-full flex flex-wrap gap-2">
                 {themes.map((t) => (
-                  <ThemeItem key={t}>{t}</ThemeItem>
+                  <ThemeItem
+                    isSelected={selectedTheme.includes(t)}
+                    setSelectedTheme={() => handleSelectedTheme(t)}
+                    key={t}
+                  >
+                    {t}
+                  </ThemeItem>
                 ))}
                 <Box className="w-full items-center gap-3">
                   <Text>Outro</Text>
