@@ -5,8 +5,11 @@ export const CreateAdminSchema = z
     adminName: z.string().min(4, "Mínimo de 4 caracteres"),
     adminLastName: z.string().min(4, "Mínimo de 4 caracteres"),
     telephone: z
-      .string({ error: "Obrigatório" })
-      .min(9, { error: "Mínimo de 9 dígitos" }),
+      .string()
+      .regex(
+        /^\(\d{2}\) \d{5}-\d{4}$/,
+        "O telefone deve estar no formato (XX) XXXXX-XXXX"
+      ),
     position: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
     isResident: z.boolean({ error: "Obrigatório" }),
     blockAndApartment: z.string(),
