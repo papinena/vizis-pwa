@@ -1,6 +1,5 @@
 import { Text } from "~/components/ui/text";
 import { Box } from "~/components/ui/box";
-import { Button } from "~/components/ui/button";
 import { useForm, FormProvider } from "react-hook-form";
 import { InputWithLabel } from "~/components/input-with-label";
 import { SectionTitle } from "~/components/section-title";
@@ -21,6 +20,8 @@ import { UploadPhotoInput } from "~/components/register/upload-photo-input";
 import { useAdminForm } from "~/hooks/useAdminForm";
 import { useMutation } from "@tanstack/react-query";
 import { createAdmin } from "~/services/create-admin";
+import { ButtonWithSpinner } from "~/components/button-with-spinner";
+import { ErrorMessage } from "~/components/error-message";
 
 function useRegisterAdmin() {
   const mutation = useMutation({
@@ -29,7 +30,7 @@ function useRegisterAdmin() {
       const res = await createAdmin(data);
 
       if (res.error) {
-        throw Error(JSON.stringify(res.error));
+        throw Error(res.error.message);
       }
 
       return res.data;
@@ -120,13 +121,15 @@ export default function AdminForm() {
                 </Text>
               </Box>
             )}
-            <Button
+            <ErrorMessage className="mx-auto" show={mutation.isError}>
+              {mutation.error?.message}
+            </ErrorMessage>
+            <ButtonWithSpinner
+              loading={mutation.isPending}
               onClick={methods.handleSubmit(onSave)}
-              className="mx-20 bg-green-primary hover:bg-green-primary/90"
-              size={"lg"}
             >
               Enviar
-            </Button>
+            </ButtonWithSpinner>
           </Box>
         </Box>
       </Box>

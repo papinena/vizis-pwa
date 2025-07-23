@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type CreateAdminType } from "~/parsers/create-admin";
 
 const defaultValues = {
-  admin: {
+  employee: {
     name: "",
     lastName: "",
     telephone: "",

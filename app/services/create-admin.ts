@@ -15,7 +15,12 @@ export async function createAdmin(data: CreateAdminType) {
 
   if (res.status >= 400 && res.status < 500) {
     const json = (await res.json()) as { status: string; message: string };
-    return { error: json };
+    return {
+      error: {
+        message: "Algo deu errado. Entre em contato com o suporte",
+        code: JSON.stringify(json),
+      },
+    };
   }
 
   return { data: await res.json() };
