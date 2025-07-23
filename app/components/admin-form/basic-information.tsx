@@ -8,57 +8,78 @@ import { Item } from "../register/item";
 import { TelephoneInput } from "../register/telephone-input";
 import { EmailInput } from "../register/email-input";
 import { PasswordInput } from "../register/password-input";
-import type { BasicInformationFormData } from "interfaces/basic-information-admin-register-form";
 import { IsResidentCheckbox } from "~/components/is-resident-checkbox";
+import { BirthDateInput } from "~/components/birth-date-input";
+import { type CreateAdminType } from "~/parsers/create-admin";
 
 export function BasicInformation() {
-  const { register, control, formState } =
-    useFormContext<BasicInformationFormData>();
+  const { register, control, watch, formState } =
+    useFormContext<CreateAdminType>();
   const errors = formState.errors;
+
+  const isResident = watch("admin.isResident");
 
   return (
     <SectionContainer>
       <SectionTitle>Informações básicas</SectionTitle>
       <Box className="flex-col gap-3">
         <Item>
+          <BirthDateInput
+            label="Data de nascimento"
+            error={errors.admin?.birthDate?.message}
+            {...register("admin.birthDate")}
+          />
           <TelephoneInput
             label="Telefone / Whatsapp"
-            error={errors.telephone?.message}
-            {...register("telephone")}
-          />
-          <InputWithLabel
-            label="Cargo no condomínio"
-            {...register("position")}
-            error={errors.position?.message}
+            error={errors.admin?.telephone?.message}
+            {...register("admin.telephone")}
           />
         </Item>
         <Item>
+          <InputWithLabel
+            label="Cargo no condomínio"
+            {...register("admin.position")}
+            error={errors.admin?.position?.message}
+          />
           <Box className="flex-1 flex-col gap-2">
             <Controller
-              name="isResident"
+              name="admin.isResident"
               control={control}
               render={({ field }) => (
                 <IsResidentCheckbox
                   value={field.value}
                   onChange={field.onChange}
-                  error={errors.isResident?.message}
+                  error={errors.admin?.isResident?.message}
                 />
               )}
             />
           </Box>
-          <InputWithLabel
-            label="Bloco e apartamento"
-            {...register("blockAndApartment")}
-            name="blockAndApartment"
-            error={errors.blockAndApartment?.message}
-          />
         </Item>
+        {typeof isResident === "boolean" && isResident && (
+          <Item>
+            <InputWithLabel
+              label="Bloco"
+              {...register("admin.block")}
+              name="block"
+              error={errors.admin?.block?.message}
+            />
+            <InputWithLabel
+              label="Apartamento"
+              {...register("admin.apartment")}
+              name="block"
+              error={errors.admin?.apartment?.message}
+            />
+          </Item>
+        )}
         <Item>
-          <EmailInput error={errors.email?.message} {...register("email")} />
+          <EmailInput
+            error={errors.admin?.email?.message}
+            {...register("admin.email")}
+          />
           <EmailInput
             label="Confirme seu email*"
-            {...register("confirmEmail")}
-            error={errors.confirmEmail?.message}
+            {...register("admin.confirmEmail")}
+            error={errors.admin?.confirmEmail?.message}
           />
         </Item>
         <Item>
@@ -66,13 +87,13 @@ export function BasicInformation() {
             <Item>
               <PasswordInput
                 label="Crie uma senha*"
-                {...register("password")}
-                error={errors.password?.message}
+                {...register("admin.password")}
+                error={errors.admin?.password?.message}
               />
               <PasswordInput
                 label="Confirme sua senha*"
-                {...register("confirmPassword")}
-                error={errors.confirmPassword?.message}
+                {...register("admin.confirmPassword")}
+                error={errors.admin?.confirmPassword?.message}
               />
             </Item>
             <Box className="flex-col">

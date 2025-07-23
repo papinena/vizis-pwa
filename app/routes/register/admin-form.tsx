@@ -9,15 +9,38 @@ import { BasicInformation } from "~/components/admin-form/basic-information";
 import { CondominiumInformation } from "~/components/admin-form/condominium-information";
 import { EmployeesInformation } from "~/components/admin-form/employees-information";
 import { Textarea } from "~/components/text-area";
-import { CreateAdminSchema } from "~/parsers/create-admin";
+import {
+  CreateAdminSchema,
+  type CreateAdminType,
+} from "~/parsers/create-admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { NameInput } from "~/components/register/name-input";
 import { Item } from "~/components/register/item";
 import { UploadPhotoInput } from "~/components/register/upload-photo-input";
 import { useAdminForm } from "~/hooks/useAdminForm";
+import { useMutation } from "@tanstack/react-query";
+import { createAdmin } from "~/services/create-admin";
+
+function useRegisterAdmin() {
+  const mutation = useMutation({
+    mutationKey: ["CREATE-ADMIN"],
+    mutationFn: async (data: CreateAdminType) => {
+      const res = await createAdmin(data);
+
+      if (res.error) {
+        throw Error(JSON.stringify(res.error));
+      }
+
+      return res.data;
+    },
+  });
+
+  return { mutation };
+}
 
 export default function AdminForm() {
+  const { mutation } = useRegisterAdmin();
   const { fields, setFields } = useAdminForm();
   const methods = useForm({
     defaultValues: {
@@ -39,8 +62,10 @@ export default function AdminForm() {
     }
   };
 
-  const onSave = (data: typeof fields) => {
+  const onSave = async (data: typeof fields) => {
     setFields(data);
+    mutation.mutate(data);
+
     console.log("Form submitted:", data);
   };
 
@@ -63,13 +88,13 @@ export default function AdminForm() {
                 <Box className="flex-col max-w-64 flex-1 gap-3">
                   <NameInput
                     label="Nome"
-                    {...methods.register("adminName", { required: true })}
-                    error={methods.formState.errors.adminName?.message}
+                    {...methods.register("admin.name", { required: true })}
+                    error={methods.formState.errors.admin?.name?.message}
                   />
                   <InputWithLabel
                     label="Sobrenome"
-                    error={methods.formState.errors.adminLastName?.message}
-                    {...methods.register("adminLastName", { required: true })}
+                    error={methods.formState.errors.admin?.lastName?.message}
+                    {...methods.register("admin.lastName", { required: true })}
                   />
                 </Box>
               </Box>
@@ -84,7 +109,7 @@ export default function AdminForm() {
               <Item className="w-full">
                 <Textarea
                   className="min-h-20"
-                  {...methods.register("condominiumUsefulInformation")}
+                  {...methods.register("condominium.usefulInformation")}
                 />
               </Item>
             </SectionContainer>

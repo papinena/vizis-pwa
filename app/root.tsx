@@ -12,7 +12,7 @@ import "./app.css";
 import useWindowSize from "./hooks/useWindowsSize";
 import { MOBILE_BREAKPOINT } from "./utils/constants";
 import { Text } from "./components/ui/text";
-import { Box } from "./components/ui/box";
+import { TanstackQueryProvider } from "./query-client";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -52,7 +52,11 @@ export default function App() {
     return <Text>Works better in mobile screens</Text>;
   }
 
-  return <Outlet />;
+  return (
+    <TanstackQueryProvider>
+      <Outlet />
+    </TanstackQueryProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

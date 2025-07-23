@@ -4,18 +4,18 @@ import { SectionTitle } from "../section-title";
 import { Box } from "../ui/box";
 import { Text } from "../ui/text";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import type { EmployeesInformationFormData } from "interfaces/basic-information-admin-register-form";
 import { Item } from "../register/item";
 import { EmailInput } from "../register/email-input";
 import { Button } from "../ui/button";
 import { PlusIcon, XIcon } from "lucide-react";
+import type { CreateAdminType } from "~/parsers/create-admin";
 
 export function EmployeesInformation() {
   const {
     register,
     control,
     formState: { errors },
-  } = useFormContext<EmployeesInformationFormData>();
+  } = useFormContext<CreateAdminType>();
 
   const { fields, append, remove } = useFieldArray({
     control,

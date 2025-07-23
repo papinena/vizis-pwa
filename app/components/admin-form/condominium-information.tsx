@@ -4,17 +4,17 @@ import { SectionTitle } from "../section-title";
 import { Textarea } from "../text-area";
 import { Box } from "../ui/box";
 import { useFormContext } from "react-hook-form";
-import type { CondominiumInformationFormData } from "interfaces/basic-information-admin-register-form";
 import { Label } from "../ui/label";
 import { Item } from "../register/item";
 import { TelephoneInput } from "../register/telephone-input";
 import { EmailInput } from "../register/email-input";
+import type { CreateAdminType } from "~/parsers/create-admin";
 
 export function CondominiumInformation() {
   const {
     register,
     formState: { errors },
-  } = useFormContext<CondominiumInformationFormData>();
+  } = useFormContext<CreateAdminType>();
 
   return (
     <SectionContainer>
@@ -23,39 +23,39 @@ export function CondominiumInformation() {
         <Item className="flex-1">
           <InputWithLabel
             label="Nome do condomínio"
-            {...register("condominiumName")}
-            error={errors.condominiumName?.message}
+            {...register("condominium.name")}
+            error={errors.condominium?.name?.message}
           />
         </Item>
         <Item>
           <InputWithLabel
             label="Administradora"
-            {...register("administer")}
-            error={errors.administer?.message}
+            {...register("condominiumAdministrator.name")}
+            error={errors.condominiumAdministrator?.name?.message}
           />
           <InputWithLabel
             label="Contato"
-            {...register("contact")}
-            error={errors.contact?.message}
+            {...register("condominiumAdministrator.contact")}
+            error={errors.condominiumAdministrator?.contact?.message}
           />
         </Item>
         <Item className="w-full">
           <InputWithLabel
             label="Endereço da Administradora"
-            {...register("administerAddress")}
-            error={errors.administerAddress?.message}
+            {...register("condominiumAdministrator.address")}
+            error={errors.condominiumAdministrator?.address?.message}
           />
         </Item>
         <Item>
           <TelephoneInput
             label="Telefone"
-            {...register("administerTelephone")}
-            error={errors.administerTelephone?.message}
+            {...register("condominiumAdministrator.telephone")}
+            error={errors.condominiumAdministrator?.telephone?.message}
           />
           <EmailInput
             label="Email"
-            {...register("administerEmail")}
-            error={errors.administerEmail?.message}
+            {...register("condominiumAdministrator.email")}
+            error={errors.condominiumAdministrator?.email?.message}
           />
         </Item>
         <Item className="w-full">
@@ -63,21 +63,21 @@ export function CondominiumInformation() {
             <Label>Sub-síndico e Conselheiros</Label>
             <Textarea
               className="min-h-20"
-              {...register("observations")}
-              error={errors.observations?.message}
+              {...register("condominiumAdministrator.counsil")}
+              error={errors.condominiumAdministrator?.counsil?.message}
             />
           </Box>
         </Item>
         <Item>
           <InputWithLabel
             label="Porteiro Chefe"
-            {...register("doorKeeperChief")}
-            error={errors.doorKeeperChief?.message}
+            {...register("condominiumAdministrator.doorKeeperChief")}
+            error={errors.condominiumAdministrator?.doorKeeperChief?.message}
           />
           <TelephoneInput
             label="Telefone Portaria"
-            {...register("receptionTelephone")}
-            error={errors.receptionTelephone?.message}
+            {...register("condominiumAdministrator.receptionTelephone")}
+            error={errors.condominiumAdministrator?.receptionTelephone?.message}
           />
         </Item>
       </Box>

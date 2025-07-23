@@ -2,42 +2,51 @@ import z from "zod";
 
 export const CreateAdminSchema = z
   .object({
-    adminName: z.string().min(4, "Mínimo de 4 caracteres"),
-    adminLastName: z.string().min(4, "Mínimo de 4 caracteres"),
-    telephone: z
-      .string()
-      .regex(
-        /^\(\d{2}\) \d{5}-\d{4}$/,
-        "O telefone deve estar no formato (XX) XXXXX-XXXX"
-      ),
-    position: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
-    isResident: z.boolean({ error: "Obrigatório" }),
-    blockAndApartment: z.string(),
-    email: z.email({ error: "Email inválido" }),
-    confirmEmail: z.email({ error: "Email inválido" }),
-    password: z
-      .string()
-      .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
-      .regex(/\d/, { error: "A senha deve conter ao menos um número" })
-      .regex(/[^a-zA-Z0-9]/, {
-        error: "A senha deve conter ao menos um caractere especial",
-      }),
-    confirmPassword: z
-      .string()
-      .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
-      .regex(/\d/, { error: "A senha deve conter ao menos um número" })
-      .regex(/[^a-zA-Z0-9]/, {
-        error: "A senha deve conter ao menos um caractere especial",
-      }),
-    administer: z.string(),
-    condominiumName: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
-    contact: z.string(),
-    administerAddress: z.string(),
-    administerTelephone: z.string(),
-    administerEmail: z.email("Email inválido").optional().or(z.literal("")),
-    observations: z.string(),
-    doorKeeperChief: z.string(),
-    receptionTelephone: z.string(),
+    admin: z.object({
+      name: z.string().min(4, "Mínimo de 4 caracteres"),
+      lastName: z.string().min(4, "Mínimo de 4 caracteres"),
+      birthDate: z.string().optional(),
+      telephone: z
+        .string()
+        .regex(
+          /^\(\d{2}\) \d{5}-\d{4}$/,
+          "O telefone deve estar no formato (XX) XXXXX-XXXX"
+        ),
+      position: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
+      isResident: z.boolean({ error: "Obrigatório" }).or(z.undefined()),
+      block: z.string().optional(),
+      apartment: z.string().optional(),
+      email: z.email({ error: "Email inválido" }),
+      confirmEmail: z.email({ error: "Email inválido" }),
+      password: z
+        .string()
+        .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
+        .regex(/\d/, { error: "A senha deve conter ao menos um número" })
+        .regex(/[^a-zA-Z0-9]/, {
+          error: "A senha deve conter ao menos um caractere especial",
+        }),
+      confirmPassword: z
+        .string()
+        .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
+        .regex(/\d/, { error: "A senha deve conter ao menos um número" })
+        .regex(/[^a-zA-Z0-9]/, {
+          error: "A senha deve conter ao menos um caractere especial",
+        }),
+    }),
+    condominium: z.object({
+      name: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
+      usefulInformation: z.string().optional(),
+    }),
+    condominiumAdministrator: z.object({
+      name: z.string(),
+      contact: z.string().optional(),
+      address: z.string().optional(),
+      telephone: z.string().optional(),
+      counsil: z.string().optional(),
+      email: z.email("Email inválido").optional().or(z.literal("")),
+      doorKeeperChief: z.string().optional(),
+      receptionTelephone: z.string().optional(),
+    }),
     employees: z
       .array(
         z.object({
@@ -46,13 +55,14 @@ export const CreateAdminSchema = z
         })
       )
       .min(1, { error: "Mínimo de um funcionário" }),
-    condominiumUsefulInformation: z.string(),
   })
-  .refine((schema) => schema.password === schema.confirmPassword, {
+  .refine((schema) => schema.admin.password === schema.admin.confirmPassword, {
     message: "As senhas devem ser iguais",
     path: ["confirmPassword"],
   })
-  .refine((schema) => schema.confirmEmail === schema.email, {
+  .refine((schema) => schema.admin.confirmEmail === schema.admin.email, {
     message: "O email deve ser igual",
     path: ["confirmEmail"],
   });
+
+export type CreateAdminType = z.infer<typeof CreateAdminSchema>;

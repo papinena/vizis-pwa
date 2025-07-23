@@ -10,7 +10,7 @@ export function IsResidentCheckbox({
   error,
 }: {
   onChange(b: boolean): void;
-  value: boolean;
+  value?: boolean;
   error?: string;
 }) {
   const _label = `É morador?${error ? "*" : ""}`;

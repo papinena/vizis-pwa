@@ -1,8 +1,10 @@
 export type BasicInformationFormData = {
   telephone: string;
+  birthDate?: string;
   position: string;
   isResident: boolean;
-  blockAndApartment: string;
+  block: string;
+  apartment: string;
   email: string;
   confirmEmail: string;
   password: string;
@@ -10,15 +12,16 @@ export type BasicInformationFormData = {
 };
 
 export type CondominiumInformationFormData = {
-  administer: string;
   condominiumName: string;
-  contact: string;
-  administerAddress: string;
-  administerTelephone: string;
-  administerEmail: string;
-  observations: string;
-  doorKeeperChief: string;
-  receptionTelephone: string;
+  condominiumAdministratorName: string;
+  condominiumAdministratorCounsil?: string;
+  condominiumAdministratorContact?: string;
+  condominiumAdministratorAddress?: string;
+  condominiumAdministratorTelephone?: string;
+  condominiumAdministratorEmail?: string;
+  doorKeeperChief?: string;
+  receptionTelephone?: string;
+  condominiumUsefulInformation?: string;
 };
 
 export type EmployeesInformationFormData = {

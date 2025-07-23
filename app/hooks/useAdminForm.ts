@@ -1,30 +1,26 @@
-import { useEffect, useState } from "react";
-import type z from "zod";
-import { CreateAdminSchema } from "~/parsers/create-admin";
+import { useState } from "react";
+import { type CreateAdminType } from "~/parsers/create-admin";
 
 const defaultValues = {
-  adminName: "",
-  adminLastName: "",
-  telephone: "",
-  position: "",
-  isResident: undefined,
-  blockAndApartment: "",
-  email: "",
-  confirmEmail: "",
-  password: "",
-  confirmPassword: "",
-  administer: "",
-  contact: "",
-  administerAddress: "",
-  administerTelephone: "",
-  administerEmail: "",
-  observations: "",
-  doorKeeperChief: "",
-  receptionTelephone: "",
-  condominiumUsefulInformation: "",
+  admin: {
+    name: "",
+    lastName: "",
+    telephone: "",
+    position: "",
+    isResident: undefined,
+    email: "",
+    confirmEmail: "",
+    password: "",
+    confirmPassword: "",
+  },
+  condominium: {
+    name: "",
+  },
+  condominiumAdministrator: {
+    name: "",
+  },
   employees: [],
-  condominiumName: "",
-};
+} as CreateAdminType;
 
 const STORAGE_KEY = "admin-form-fields";
 
