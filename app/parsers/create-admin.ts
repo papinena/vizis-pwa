@@ -2,7 +2,7 @@ import z from "zod";
 
 export const CreateAdminSchema = z
   .object({
-    admin: z.object({
+    employee: z.object({
       name: z.string().min(4, "Mínimo de 4 caracteres"),
       lastName: z.string().min(4, "Mínimo de 4 caracteres"),
       birthDate: z.string().optional(),
@@ -38,7 +38,7 @@ export const CreateAdminSchema = z
       usefulInformation: z.string().optional(),
     }),
     condominiumAdministrator: z.object({
-      name: z.string(),
+      name: z.string().min(2, { error: "Mínimo de 2 caracteres" }),
       contact: z.string().optional(),
       address: z.string().optional(),
       telephone: z.string().optional(),
@@ -56,11 +56,14 @@ export const CreateAdminSchema = z
       )
       .min(1, { error: "Mínimo de um funcionário" }),
   })
-  .refine((schema) => schema.admin.password === schema.admin.confirmPassword, {
-    message: "As senhas devem ser iguais",
-    path: ["confirmPassword"],
-  })
-  .refine((schema) => schema.admin.confirmEmail === schema.admin.email, {
+  .refine(
+    (schema) => schema.employee.password === schema.employee.confirmPassword,
+    {
+      message: "As senhas devem ser iguais",
+      path: ["confirmPassword"],
+    }
+  )
+  .refine((schema) => schema.employee.confirmEmail === schema.employee.email, {
     message: "O email deve ser igual",
     path: ["confirmEmail"],
   });

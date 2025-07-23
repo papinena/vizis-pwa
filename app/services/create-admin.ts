@@ -1,37 +1,9 @@
+import type { CreateAdminType } from "~/parsers/create-admin";
 import { api } from "~/utils/api";
-
-type CreateAdminProps = {
-  employee: {
-    name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    telephone: string;
-    position: string;
-    is_resident: boolean;
-    block?: string;
-    apartment?: string;
-  };
-  condominium: {
-    name: string;
-    info?: string;
-  };
-  condominiumAdministrator: {
-    name: string;
-    contact?: string;
-    address?: string;
-    telephone?: string;
-    email?: string;
-    sub_trustee?: string;
-    doorKeeperChief?: string;
-    receptionTelephone?: string;
-  };
-  addedEmployees: { name: string; email: string }[];
-};
 
 const { BASE_URL } = api();
 
-export async function createAdmin(data: CreateAdminProps) {
+export async function createAdmin(data: CreateAdminType) {
   const url = new URL(BASE_URL + "/register/admin");
   const headers = new Headers({ "Content-type": "application/json" });
 

@@ -17,7 +17,7 @@ export function BasicInformation() {
     useFormContext<CreateAdminType>();
   const errors = formState.errors;
 
-  const isResident = watch("admin.isResident");
+  const isResident = watch("employee.isResident");
 
   return (
     <SectionContainer>
@@ -26,30 +26,30 @@ export function BasicInformation() {
         <Item>
           <BirthDateInput
             label="Data de nascimento"
-            error={errors.admin?.birthDate?.message}
-            {...register("admin.birthDate")}
+            error={errors.employee?.birthDate?.message}
+            {...register("employee.birthDate")}
           />
           <TelephoneInput
             label="Telefone / Whatsapp"
-            error={errors.admin?.telephone?.message}
-            {...register("admin.telephone")}
+            error={errors.employee?.telephone?.message}
+            {...register("employee.telephone")}
           />
         </Item>
         <Item>
           <InputWithLabel
             label="Cargo no condomínio"
-            {...register("admin.position")}
-            error={errors.admin?.position?.message}
+            {...register("employee.position")}
+            error={errors.employee?.position?.message}
           />
           <Box className="flex-1 flex-col gap-2">
             <Controller
-              name="admin.isResident"
+              name="employee.isResident"
               control={control}
               render={({ field }) => (
                 <IsResidentCheckbox
                   value={field.value}
                   onChange={field.onChange}
-                  error={errors.admin?.isResident?.message}
+                  error={errors.employee?.isResident?.message}
                 />
               )}
             />
@@ -59,27 +59,27 @@ export function BasicInformation() {
           <Item>
             <InputWithLabel
               label="Bloco"
-              {...register("admin.block")}
+              {...register("employee.block")}
               name="block"
-              error={errors.admin?.block?.message}
+              error={errors.employee?.block?.message}
             />
             <InputWithLabel
               label="Apartamento"
-              {...register("admin.apartment")}
+              {...register("employee.apartment")}
               name="block"
-              error={errors.admin?.apartment?.message}
+              error={errors.employee?.apartment?.message}
             />
           </Item>
         )}
         <Item>
           <EmailInput
-            error={errors.admin?.email?.message}
-            {...register("admin.email")}
+            error={errors.employee?.email?.message}
+            {...register("employee.email")}
           />
           <EmailInput
             label="Confirme seu email*"
-            {...register("admin.confirmEmail")}
-            error={errors.admin?.confirmEmail?.message}
+            {...register("employee.confirmEmail")}
+            error={errors.employee?.confirmEmail?.message}
           />
         </Item>
         <Item>
@@ -87,13 +87,13 @@ export function BasicInformation() {
             <Item>
               <PasswordInput
                 label="Crie uma senha*"
-                {...register("admin.password")}
-                error={errors.admin?.password?.message}
+                {...register("employee.password")}
+                error={errors.employee?.password?.message}
               />
               <PasswordInput
                 label="Confirme sua senha*"
-                {...register("admin.confirmPassword")}
-                error={errors.admin?.confirmPassword?.message}
+                {...register("employee.confirmPassword")}
+                error={errors.employee?.confirmPassword?.message}
               />
             </Item>
             <Box className="flex-col">

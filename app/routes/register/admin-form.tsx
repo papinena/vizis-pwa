@@ -65,8 +65,6 @@ export default function AdminForm() {
   const onSave = async (data: typeof fields) => {
     setFields(data);
     mutation.mutate(data);
-
-    console.log("Form submitted:", data);
   };
 
   const hasErrors = Object.keys(methods.formState.errors).length > 0;
@@ -88,13 +86,15 @@ export default function AdminForm() {
                 <Box className="flex-col max-w-64 flex-1 gap-3">
                   <NameInput
                     label="Nome"
-                    {...methods.register("admin.name", { required: true })}
-                    error={methods.formState.errors.admin?.name?.message}
+                    {...methods.register("employee.name", { required: true })}
+                    error={methods.formState.errors.employee?.name?.message}
                   />
                   <InputWithLabel
                     label="Sobrenome"
-                    error={methods.formState.errors.admin?.lastName?.message}
-                    {...methods.register("admin.lastName", { required: true })}
+                    error={methods.formState.errors.employee?.lastName?.message}
+                    {...methods.register("employee.lastName", {
+                      required: true,
+                    })}
                   />
                 </Box>
               </Box>
