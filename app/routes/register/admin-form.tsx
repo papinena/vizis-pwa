@@ -22,8 +22,9 @@ import { useMutation } from "@tanstack/react-query";
 import { createAdmin } from "~/services/create-admin";
 import { ButtonWithSpinner } from "~/components/button-with-spinner";
 import { ErrorMessage } from "~/components/error-message";
+import { useNavigate } from "react-router";
 
-function useRegisterAdmin() {
+function useRegisterAdmin({ onSuccess }: { onSuccess: () => void }) {
   const mutation = useMutation({
     mutationKey: ["CREATE-ADMIN"],
     mutationFn: async (data: CreateAdminType) => {
@@ -35,13 +36,18 @@ function useRegisterAdmin() {
 
       return res.data;
     },
+    onSuccess,
   });
 
   return { mutation };
 }
 
 export default function AdminForm() {
-  const { mutation } = useRegisterAdmin();
+  const navigate = useNavigate();
+  const { mutation } = useRegisterAdmin({
+    // Redirect to a success page or dashboard
+    onSuccess: () => navigate("/register/admin/submitted"),
+  });
   const { fields, setFields } = useAdminForm();
   const methods = useForm({
     defaultValues: {

@@ -38,6 +38,7 @@ export function useAdminForm() {
   }
 
   function _setFields(f: typeof fields) {
+    console.log(f);
     setFields(f);
     setLocalStorageFields(f);
   }
