@@ -24,11 +24,7 @@ import { ButtonWithSpinner } from "~/components/button-with-spinner";
 import { ErrorMessage } from "~/components/error-message";
 import { useNavigate } from "react-router";
 
-function useRegisterAdmin({
-  onMutationSuccess,
-}: {
-  onMutationSuccess: () => void;
-}) {
+function useRegisterAdmin({ onSuccess }: { onSuccess: () => void }) {
   const mutation = useMutation({
     mutationKey: ["CREATE-ADMIN"],
     mutationFn: async (data: CreateAdminType) => {
@@ -40,7 +36,7 @@ function useRegisterAdmin({
 
       return res.data;
     },
-    onSuccess: onMutationSuccess,
+    onSuccess,
   });
 
   return { mutation };
@@ -50,7 +46,7 @@ export default function AdminForm() {
   const navigate = useNavigate();
   const { mutation } = useRegisterAdmin({
     // Redirect to a success page or dashboard
-    onMutationSuccess: () => navigate("/register/admin/submitted"),
+    onSuccess: () => navigate("/register/admin/submitted"),
   });
   const { fields, setFields } = useAdminForm();
   const methods = useForm({

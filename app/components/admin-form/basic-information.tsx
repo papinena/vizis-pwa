@@ -55,24 +55,22 @@ export function BasicInformation() {
             />
           </Box>
         </Item>
-        <Item
-          className={
-            typeof isResident === "boolean" && isResident ? "flex" : "hidden"
-          }
-        >
-          <InputWithLabel
-            label="Bloco"
-            {...register("employee.block")}
-            name="employee.block"
-            error={errors.employee?.block?.message}
-          />
-          <InputWithLabel
-            label="Apartamento"
-            {...register("employee.apartment")}
-            name="employee.apartment"
-            error={errors.employee?.apartment?.message}
-          />
-        </Item>
+        {typeof isResident === "boolean" && isResident && (
+          <Item>
+            <InputWithLabel
+              label="Bloco"
+              {...register("employee.block")}
+              name="block"
+              error={errors.employee?.block?.message}
+            />
+            <InputWithLabel
+              label="Apartamento"
+              {...register("employee.apartment")}
+              name="block"
+              error={errors.employee?.apartment?.message}
+            />
+          </Item>
+        )}
         <Item>
           <EmailInput
             error={errors.employee?.email?.message}
