@@ -19,6 +19,21 @@ class AdminMapper {
   }
 }
 
+class CondominiumAdministratorMapper {
+  static toAPI(data: CreateAdminType) {
+    return {
+      name: data.condominiumAdministrator.name,
+      contact: data.condominiumAdministrator.contact,
+      address: data.condominiumAdministrator.address,
+      telephone: data.condominiumAdministrator.telephone,
+      counsil: data.condominiumAdministrator.counsil,
+      email: data.condominiumAdministrator.email,
+      door_keeper_chief: data.condominiumAdministrator.doorKeeperChief,
+      reception_telephone: data.condominiumAdministrator.receptionTelephone,
+    };
+  }
+}
+
 type AdminAPIProps = {
   name: string;
   last_name: string;
@@ -36,7 +51,7 @@ export async function createAdmin(data: CreateAdminType) {
   const headers = new Headers({ "Content-type": "application/json" });
 
   const body = {
-    ...data,
+    condominium: { ...data.condominium },
     employees: data.employees.map((e) => ({
       last_name: "",
       telephone: "",
@@ -46,10 +61,13 @@ export async function createAdmin(data: CreateAdminType) {
       name: e.name,
       password: "0123456",
       is_register_completed: false,
+      permission: "ADMIN",
     })),
+    condominiumAdministrator: CondominiumAdministratorMapper.toAPI(data),
     employee: {
       ...AdminMapper.toAPI(data),
       password: data.employee.password,
+      permission: "ADMIN",
     },
   };
 
