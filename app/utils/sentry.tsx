@@ -4,7 +4,7 @@ import type { Route } from "../+types/root";
 import { isRouteErrorResponse } from "react-router";
 
 Sentry.init({
-  dsn: "https://c8c2ab88ba4b557a7c0050d1dfe48749@o4509481423863808.ingest.us.sentry.io/4509604794466304",
+  dsn: import.meta.env.VITE_SENTRY_DSN,
 
   // Adds request headers and IP for users, for more info visit:
   // https://docs.sentry.io/platforms/javascript/guides/react/configuration/options/#sendDefaultPii
