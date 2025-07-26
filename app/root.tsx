@@ -8,6 +8,8 @@ import { Text } from "./components/ui/text";
 import { TanstackQueryProvider } from "./query-client";
 import "~/utils/sentry";
 import { SentryErrorBoundary } from "~/utils/sentry";
+import { Box } from "./components/ui/box";
+import { Footer } from "./components/footer";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -50,7 +52,10 @@ export default function App() {
   return (
     <SentryErrorBoundary>
       <TanstackQueryProvider>
-        <Outlet />
+        <Box className="bg-gray-200 min-h-dvh flex h-full w-full p-3 flex-col px-5 py-3 gap-3">
+          <Outlet />
+          <Footer className="ml-auto" />
+        </Box>
       </TanstackQueryProvider>
     </SentryErrorBoundary>
   );
